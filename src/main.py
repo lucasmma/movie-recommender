@@ -12,7 +12,7 @@ def main():
 if __name__ == "__main__":
     # app.run(debug=True)
     while True:
-        movie_name = input("Digite o nome de um filme")
+        movie_name = input("Digite o nome de um filme: ")
         if movie_name == "-1":
             break
-        MovieRecomendation().get_recomendation(movie_name)
+        print(MovieRecomendation().get_recomendation(movie_name))

@@ -1,11 +1,12 @@
 import pandas as pd
-from sklearn.neighbors import NearestNeighbors
-from Utils import get_dataset, get_movies
+from Model import get_datasets, get_movies
+import pickle
+
 
 class MovieRecomendation:
     def __init__(self):
         self.movies = get_movies()
-        self.final_dataset, self.dataset_otimizado = get_dataset()
+        self.final_dataset, self.dataset_otimizado = get_datasets()
 
     def get_recomendation(self, movie_name):
         n_movies_to_reccomend = 10
@@ -13,7 +14,8 @@ class MovieRecomendation:
         if len(movie_list):
             movie_idx = movie_list.iloc[0]['movieId']
             movie_idx = self.final_dataset[self.final_dataset['movieId'] == movie_idx].index[0]
-            distances, indices = self.model().kneighbors(self.dataset_otimizado[movie_idx], n_neighbors=n_movies_to_reccomend + 1)
+            distances, indices = self.model().kneighbors(self.dataset_otimizado[movie_idx],
+                                                         n_neighbors=n_movies_to_reccomend + 1)
             rec_movie_indices = sorted(list(zip(indices.squeeze().tolist(), distances.squeeze().tolist())),
                                        key=lambda x: x[1])[:0:-1]
             recommend_frame = []
@@ -26,5 +28,6 @@ class MovieRecomendation:
         else:
             return "No movies found. Please check your input"
 
-    def model(self):
-        return NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=20, n_jobs=-1)
+    @staticmethod
+    def model():
+        return pickle.load(open("smallest_dataset.sav", 'rb'))
