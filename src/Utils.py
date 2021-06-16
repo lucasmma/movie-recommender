@@ -1,8 +1,5 @@
 import pandas as pd
-import numpy as np
 from scipy.sparse import csr_matrix
-from sklearn.neighbors import NearestNeighbors
-import matplotlib.pyplot as plt
 
 
 def get_dataset():
@@ -20,13 +17,8 @@ def get_dataset():
     dataset_otimizado = csr_matrix(final_dataset.values)
     final_dataset.reset_index(inplace=True)
 
-    return dataset_otimizado, final_dataset
+    return final_dataset, dataset_otimizado
 
 
-def main():
-    dataset = get_dataset()
-    # print(dataset.head())
-
-
-if __name__ == "__main__":
-    main()
+def get_movies():
+    return pd.read_csv("../dataset/ml-latest-small/ratings.csv")
