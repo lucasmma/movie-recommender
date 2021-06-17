@@ -35,19 +35,20 @@ def get_recomendation():
     try:
         movie_name = request.form.get('movie_title')
         recomendations = MovieRecomendation().get_recomendation(movie_name, 10)
-        seggestions_list = recomendations['Title'].values.tolist()
+        print(recomendations)
+        title_rating_list = []
+        if str(recomendations) != "No movies found. Please check your input":
+            seggestions_list = recomendations['Title'].values.tolist()
+            rating_recomendations = recomendations['Distance'].values.tolist()
 
-        print(recomendations['Title'].values.tolist())
-        render_template('sugestions.html')
-        return render_template('sugestions.html', suggestions=seggestions_list)
+            for index in range(len(seggestions_list)):
+                title_rating_list.append(seggestions_list[index] + " - " + str(rating_recomendations[index] * 2))
+        else:
+            title_rating_list.append("Movie not found")
+        return render_template('sugestions.html', suggestions=title_rating_list)
     except Exception:
         print("exception")
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
-    while True:
-        movie_name = input("Digite o nome de um filme: ")
-        if movie_name == "-1":
-            break
-        print()
+    app.run(debug=True, port=3000)
