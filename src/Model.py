@@ -3,9 +3,11 @@ from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 import pickle
 
+dataset = "ml-small"
+
 
 def get_datasets():
-    ratings = pd.read_csv("../dataset/ml-latest-small/ratings.csv")
+    ratings = pd.read_csv("../dataset/" + dataset + "/ratings.csv")
     final_dataset = ratings.pivot(index='movieId', columns='userId', values='rating')
     final_dataset.fillna(0, inplace=True)
 
@@ -23,11 +25,11 @@ def get_datasets():
 
 
 def get_movies():
-    return pd.read_csv("../dataset/ml-latest-small/movies.csv")
+    return pd.read_csv("../dataset/" + dataset + "/movies.csv")
 
 
 def save_model(modelai):
-    filename = 'smallest_dataset.sav'
+    filename = dataset + '.sav'
     pickle.dump(modelai, open(filename, 'wb'))
 
 
