@@ -1,7 +1,7 @@
 import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
-import pickle
+import pickle5 as pickle
 
 dataset = "ml-small"
 
@@ -34,6 +34,8 @@ def save_model(modelai):
 
 
 final_dataset, dataset_otimizado = get_datasets()
+#similaridade de cossenos
 model = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=20, n_jobs=-1)
+# print(dataset_otimizado.info())
 model.fit(dataset_otimizado)
 save_model(model)
