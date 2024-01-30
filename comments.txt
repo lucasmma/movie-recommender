@@ -1,0 +1,3 @@
+conseguir criar um jeito de não dar stackoverflow quando usar o dataset maior.
+
+Talvez dividir em datasets menores e processar cada um salvar e depois juntar todos
