@@ -1,5 +1,5 @@
 import pandas as pd
-from model import get_datasets, get_movies
+from Model import get_datasets, get_movies
 import pickle5 as pickle
 
 
