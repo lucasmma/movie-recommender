@@ -46,9 +46,10 @@ def get_recomendation():
         else:
             title_rating_list.append("Movie not found")
         return render_template('sugestions.html', suggestions=title_rating_list)
-    except Exception:
-        print("exception")
+    except Exception as e:
+        # print exceptio
+        print("exception1 " + str(e))
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=3000)
+    app.run(debug=True, port=3000, host='0.0.0.0')
