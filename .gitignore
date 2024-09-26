@@ -1,5 +1,5 @@
 .idea/
-dataset/
+dataset/ml-25m/
 
 __pycache__/
-*.sav
+ml-25m.sav
