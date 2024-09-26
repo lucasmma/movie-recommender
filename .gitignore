@@ -3,3 +3,5 @@ dataset/ml-25m/
 
 __pycache__/
 ml-25m.sav
+
+venv/
