@@ -9,7 +9,6 @@ movieRecomendation = MovieRecomendation()
 
 @app.route("/")
 def main():
-
     return render_template('movie-recommender.html')
 
 
