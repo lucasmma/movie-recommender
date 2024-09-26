@@ -13,6 +13,8 @@ class MovieRecomendation:
             movie_list = self.movies[self.movies['title'].str.lower().str.contains(movie_name.lower())]
             if len(movie_list):
                 movie_idx = movie_list.iloc[0]['movieId']
+                if(len(self.final_dataset[self.final_dataset['movieId'] == movie_idx].index) == 0):
+                    return "No movies found. Please check your input"
                 movie_idx = self.final_dataset[self.final_dataset['movieId'] == movie_idx].index[0]
                 distances, indices = self.model().kneighbors(self.dataset_otimizado[movie_idx],
                                                             n_neighbors=size + 1)
