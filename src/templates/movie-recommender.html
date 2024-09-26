@@ -73,12 +73,18 @@
 </head>
 <body>
     <h1>Movie Recommender</h1>
-    <input id="title" type="text" placeholder="Enter movie title..."/>
+    <input id="title" type="text" placeholder="Enter movie title..." onkeydown="triggerRecommendation(event)"/>
     <button onclick="getRecommendation()">Get Recommendation</button>
     
     <div id="suggestions"></div>
 
     <script>
+        function triggerRecommendation(event) {
+            if (event.key === "Enter") {
+                getRecommendation();
+            }
+        }
+
         function getRecommendation() {
             $.ajax({
                 url: "/recomendation",
