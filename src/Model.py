@@ -18,10 +18,10 @@ def filter_dataset(dataset):
 
     # filter dataset minimin votes/user in movies = 10, minimum votes in one film by user = 50
     no_user_voted = dataset.groupby('movieId')['rating'].agg('count')
-    final_dataset = final_dataset.loc[no_user_voted[no_user_voted > 10].index, :]
+    final_dataset = final_dataset.loc[no_user_voted[no_user_voted > 5].index, :]
 
     no_movies_voted = dataset.groupby('userId')['rating'].agg('count')
-    final_dataset = final_dataset.loc[:, no_movies_voted[no_movies_voted > 50].index]
+    final_dataset = final_dataset.loc[:, no_movies_voted[no_movies_voted > 70].index]
     return final_dataset
 
 def get_datasets():
@@ -29,14 +29,12 @@ def get_datasets():
 
     dataframe_size = ratings.shape[0]
     dataframe = []
-    for index, datachunk in enumerate(slice_data_frame(ratings, 100000)):
+    for index, datachunk in enumerate(slice_data_frame(ratings, 1000000)):
         dataframe.append(pd.DataFrame(datachunk))
-        percentage = ((index + 1) * 100000) / dataframe_size * 100
+        percentage = ((index + 1) * 1000000) / dataframe_size * 100
         if (percentage > 100.0):
             percentage = 100.0
         print("Index: {} e Progresso: {} %".format(index, percentage))
-        # if(index == 3):
-        #     break
     
     concatenated_dataset = pd.concat(dataframe)
     final_dataset = filter_dataset(concatenated_dataset)
