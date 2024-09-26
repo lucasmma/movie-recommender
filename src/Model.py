@@ -29,7 +29,7 @@ def get_datasets():
 
     dataframe_size = ratings.shape[0]
     dataframe = []
-    for index, datachunk in enumerate(slice_data_frame(ratings, 1000000)):
+    for index, datachunk in enumerate(slice_data_frame(ratings, 100000)):
         dataframe.append(pd.DataFrame(datachunk))
         percentage = ((index + 1) * 1000000) / dataframe_size * 100
         if (percentage > 100.0):
@@ -58,10 +58,11 @@ def save_model(modelai):
 
 if(__name__ == "__main__"):
     print("Pegando datasets")
-    final_dataset = get_datasets()
+    final_dataset, dataset_otimizado = get_datasets()
+    final_dataset.columns = final_dataset.columns.astype(str)
     print("Treinando modelo")
     model = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=20, n_jobs=-1)
-    model.fit(final_dataset)
+    model.fit(final_dataset.to_numpy())
     print("Salvando modelo")
     save_model(model)
     print("Modelo treinado e salvo com sucesso")
