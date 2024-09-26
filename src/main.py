@@ -9,27 +9,7 @@ movieRecomendation = MovieRecomendation()
 @app.route("/")
 def main():
 
-    page = "<html><head>"
-    page += '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>'
-    page += "<style>button{ margin-top: 16px }</style>"
-    page += "</head><body>"
-    page += "<input id='title'></input>"
-    page += "<div id='sugestions'></div>"
-    page += "<br>"
-    page += """<button onclick=\'$.ajax({
-      url: "/recomendation",
-      type: "POST",
-      data: {movie_title: $("#title").val()},
-      success: function(response) {
-        $("#sugestions").html(response);
-      },
-      error: function(xhr) {
-        //Do Something to handle error
-      }
-    });\'>Get Recomendation</button>"""
-    page += "</body></html>"
-
-    return page
+    return render_template('movie-recommender.html')
 
 
 @app.route("/recomendation", methods=["POST", "GET"])
@@ -50,7 +30,8 @@ def get_recomendation():
         return render_template('sugestions.html', suggestions=title_rating_list)
     except Exception as e:
         # print exceptio
-        print("exception1 " + str(e))
+        return 'Exeption: ' + str(e)
+        print("exception " + str(e))
 
 
 if __name__ == "__main__":
