@@ -1,5 +1,11 @@
 <label id="value_label">
-    {% for suggestion in suggestions %}
-        <a href="https://www.imdb.com/title/tt{{ suggestion['link'] }}" target="_blank"><p>{{ suggestion['title'] }}</p></a>
-    {% endfor %}
+    {% if not_found %}
+        <h4>No recommendations found. <br>Either this move doesn't exist in the database or it is spelled wrong.</h4>
+    {% else %}
+        {% for suggestion in suggestions %}
+            <a href="https://www.imdb.com/title/tt{{ suggestion['link'] }}" target="_blank">
+                <p>{{ suggestion['title'] }}</p>
+            </a>
+        {% endfor %}
+    {% endif %}
 </label>
