@@ -24,7 +24,7 @@ def filter_dataset(dataset):
     final_dataset = final_dataset.loc[:, no_movies_voted[no_movies_voted > 70].index]
     return final_dataset
 
-def get_datasets():
+def get_datasets(to_train=False):
     ratings = pd.read_csv("../dataset/" + dataset + "/ratings.csv")
 
     dataframe_size = ratings.shape[0]
@@ -40,7 +40,8 @@ def get_datasets():
     final_dataset = filter_dataset(concatenated_dataset)
 
     dataset_otimizado = csr_matrix(final_dataset.values)
-    final_dataset.reset_index(inplace=True)
+    if(not to_train):
+        final_dataset.reset_index(inplace=True)
 
     return final_dataset, dataset_otimizado
 
@@ -58,7 +59,7 @@ def save_model(modelai):
 
 if(__name__ == "__main__"):
     print("Pegando datasets")
-    final_dataset, dataset_otimizado = get_datasets()
+    final_dataset, dataset_otimizado = get_datasets(to_train=True)
     final_dataset.columns = final_dataset.columns.astype(str)
     print("Treinando modelo")
     model = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=20, n_jobs=-1)
