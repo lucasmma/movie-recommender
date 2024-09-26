@@ -1,16 +1,26 @@
 import pandas as pd
 from Model import get_datasets, get_movies
 import pickle as pickle
+import re
+
+
+def clean_string(s):
+    # Remove special characters using regular expressions
+    return re.sub(r'[^a-zA-Z0-9\s]', '', s.lower())
+
 
 
 class MovieRecomendation:
     def __init__(self):
         self.movies = get_movies()
         self.final_dataset, self.dataset_otimizado = get_datasets()
+        self.movies['cleaned_title'] = self.movies['title'].apply(lambda x: clean_string(x))
 
     def get_recomendation(self, movie_name, size):
         try:
-            movie_list = self.movies[self.movies['title'].str.lower().str.contains(movie_name.lower())]
+            cleaned_movie_name = clean_string(movie_name)
+            
+            movie_list = self.movies[self.movies['cleaned_title'].str.contains(cleaned_movie_name)]
             if len(movie_list):
                 movie_idx = movie_list.iloc[0]['movieId']
                 if(len(self.final_dataset[self.final_dataset['movieId'] == movie_idx].index) == 0):
