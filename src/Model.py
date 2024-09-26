@@ -4,7 +4,7 @@ from sklearn.neighbors import NearestNeighbors
 import pickle5 as pickle
 import numpy as np
 
-dataset = "ml-25m"
+dataset = "ml-small"
 
 
 def slice_data_frame(data_frame, chunk_size):
@@ -25,7 +25,7 @@ def filter_dataset(dataset):
     return final_dataset
 
 def get_datasets():
-    ratings = pd.read_csv("../dataset/" + dataset + "/ratings.csv")
+    ratings = pd.read_csv("dataset/" + dataset + "/ratings.csv")
 
     dataframe_size = ratings.shape[0]
     dataframe = []
@@ -48,8 +48,11 @@ def get_datasets():
 
 
 def get_movies():
-    return pd.read_csv("../dataset/" + dataset + "/movies.csv")
+    return pd.read_csv("dataset/" + dataset + "/movies.csv")
 
+def get_links():
+    dtype = {"movieId": int, "imdbId": str, "tmdbId": str}
+    return pd.read_csv("dataset/" + dataset + "/links.csv", dtype=dtype)
 
 def save_model(modelai):
     filename = dataset + '.sav'
