@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from MovieRecomendation import MovieRecomendation
+from Model import get_links
 
 app = Flask(__name__)
 
@@ -19,12 +20,18 @@ def get_recomendation():
         recomendations = movieRecomendation.get_recomendation(movie_name, 10)
         print(recomendations)
         title_rating_list = []
+        links = get_links()
         if str(recomendations) != "No movies found. Please check your input":
             seggestions_list = recomendations['Title'].values.tolist()
             rating_recomendations = recomendations['Distance'].values.tolist()
+            imdbIds = recomendations['Id'].values.tolist()
+
 
             for index in range(len(seggestions_list)):
-                title_rating_list.append(seggestions_list[index] + " - " + str(rating_recomendations[index] * 2))
+                title_rating_list.append({
+                    "title": seggestions_list[index] + " - " + str(rating_recomendations[index] * 2),
+                    "link": links[links['movieId'] == imdbIds[index]]['tmdbId'].values[0],
+                })
         else:
             title_rating_list.append("Movie not found")
         return render_template('sugestions.html', suggestions=title_rating_list)
