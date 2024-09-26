@@ -20,6 +20,7 @@ def get_recomendation():
         print(recomendations)
         title_rating_list = []
         links = get_links()
+        anyMoviesFound = str(recomendations) != "No movies found. Please check your input"
         if str(recomendations) != "No movies found. Please check your input":
             seggestions_list = recomendations['Title'].values.tolist()
             rating_recomendations = recomendations['Distance'].values.tolist()
@@ -31,9 +32,10 @@ def get_recomendation():
                     "title": seggestions_list[index] + " - " + str(rating_recomendations[index] * 2),
                     "link": links[links['movieId'] == imdbIds[index]]['tmdbId'].values[0],
                 })
-        else:
-            title_rating_list.append("Movie not found")
-        return render_template('sugestions.html', suggestions=title_rating_list)
+        
+        print(not anyMoviesFound)
+
+        return render_template('sugestions.html', suggestions=title_rating_list, not_found=not anyMoviesFound)
     except Exception as e:
         # print exceptio
         return 'Exeption: ' + str(e)
