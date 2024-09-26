@@ -1,6 +1,6 @@
 import pandas as pd
 from Model import get_datasets, get_movies
-import pickle5 as pickle
+import pickle as pickle
 
 
 class MovieRecomendation:
