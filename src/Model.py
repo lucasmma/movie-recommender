@@ -26,7 +26,6 @@ def filter_dataset(dataset):
 
 def get_datasets():
     ratings = pd.read_csv("../dataset/" + dataset + "/ratings.csv")
-    print(ratings.shape)
 
     dataframe_size = ratings.shape[0]
     dataframe = []
