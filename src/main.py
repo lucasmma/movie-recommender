@@ -23,13 +23,13 @@ def get_recomendation():
         anyMoviesFound = str(recomendations) != "No movies found. Please check your input"
         if str(recomendations) != "No movies found. Please check your input":
             seggestions_list = recomendations['Title'].values.tolist()
-            rating_recomendations = recomendations['Distance'].values.tolist()
+            rating_recomendations = recomendations['Probability'].values.tolist()
             imdbIds = recomendations['Id'].values.tolist()
 
 
             for index in range(len(seggestions_list)):
                 title_rating_list.append({
-                    "title": seggestions_list[index] + " - " + str(rating_recomendations[index] * 2),
+                    "title": seggestions_list[index] + " - " + str(rating_recomendations[index]),
                     "link": links[links['movieId'] == imdbIds[index]]['tmdbId'].values[0],
                 })
         
