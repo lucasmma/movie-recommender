@@ -3,6 +3,8 @@ from MovieRecomendation import MovieRecomendation
 
 app = Flask(__name__)
 
+movieRecomendation = MovieRecomendation()
+
 
 @app.route("/")
 def main():
@@ -34,7 +36,7 @@ def main():
 def get_recomendation():
     try:
         movie_name = request.form.get('movie_title')
-        recomendations = MovieRecomendation().get_recomendation(movie_name, 10)
+        recomendations = movieRecomendation.get_recomendation(movie_name, 10)
         print(recomendations)
         title_rating_list = []
         if str(recomendations) != "No movies found. Please check your input":
