@@ -30,10 +30,8 @@ def get_recomendation():
             for index in range(len(seggestions_list)):
                 title_rating_list.append({
                     "title": seggestions_list[index] + " - " + str(rating_recomendations[index]),
-                    "link": links[links['movieId'] == imdbIds[index]]['tmdbId'].values[0],
+                    "link": links[links['movieId'] == imdbIds[index]]['imdbId'].values[0],
                 })
-        
-        print(not anyMoviesFound)
 
         return render_template('sugestions.html', suggestions=title_rating_list, not_found=not anyMoviesFound)
     except Exception as e:
