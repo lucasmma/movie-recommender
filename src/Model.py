@@ -4,7 +4,7 @@ from sklearn.neighbors import NearestNeighbors
 import pickle5 as pickle
 import numpy as np
 
-dataset = "ml-small"
+dataset = "ml-25m"
 
 
 def slice_data_frame(data_frame, chunk_size):
@@ -25,7 +25,7 @@ def filter_dataset(dataset):
     return final_dataset
 
 def get_datasets():
-    ratings = pd.read_csv("dataset/" + dataset + "/ratings.csv")
+    ratings = pd.read_csv("../dataset/" + dataset + "/ratings.csv")
     print(ratings.shape)
 
     dataframe_size = ratings.shape[0]
@@ -49,16 +49,20 @@ def get_datasets():
 
 
 def get_movies():
-    return pd.read_csv("dataset/" + dataset + "/movies.csv")
+    return pd.read_csv("../dataset/" + dataset + "/movies.csv")
 
 
 def save_model(modelai):
     filename = dataset + '.sav'
     pickle.dump(modelai, open(filename, 'wb'))
 
-
-final_dataset, dataset_otimizado = get_datasets()
-#similaridade de cossenos
-model = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=20, n_jobs=-1)
-model.fit(dataset_otimizado)
-save_model(model)
+if(__name__ == "__main__"):
+    print("Pegando datasets")
+    final_dataset = get_datasets()
+    print("Treinando modelo")
+    model = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=20, n_jobs=-1)
+    model.fit(final_dataset)
+    print("Salvando modelo")
+    save_model(model)
+    print("Modelo treinado e salvo com sucesso")
+    print("Fim do processo")
