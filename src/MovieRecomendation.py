@@ -22,7 +22,7 @@ class MovieRecomendation:
                 for val in rec_movie_indices:
                     movie_idx = self.final_dataset.iloc[val[0]]['movieId']
                     idx = self.movies[self.movies['movieId'] == movie_idx].index
-                    recommend_frame.append({'Title': self.movies.iloc[idx]['title'].values[0], 'Distance': val[1]})
+                    recommend_frame.append({'Title': self.movies.iloc[idx]['title'].values[0], 'Distance': val[1], 'Id': movie_idx})
                 df = pd.DataFrame(recommend_frame, index=range(1, size + 1))
                 return df
             else:
